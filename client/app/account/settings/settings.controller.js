@@ -4,6 +4,15 @@ angular.module('fullstackApp')
   .controller('SettingsCtrl', function ($scope, User, Auth) {
     $scope.errors = {};
 
+    $scope.panelOption = 'data';
+
+    $scope.update = function(form) {
+      $scope.dataSubmitted = true;
+      /**
+      * TODO: update profile
+      */      
+    };
+
     $scope.changePassword = function(form) {
       $scope.submitted = true;
       if(form.$valid) {

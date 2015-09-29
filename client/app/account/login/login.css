@@ -10,3 +10,13 @@
   background-color: #fafafa;
   border-color: #ccc;
 }
+
+.cust-btn {
+  transition: all 0.2s;
+  width: 100px;
+}
+
+
+.ptr {
+  cursor:pointer;
+}

@@ -2,38 +2,107 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-sm-12">
-      <h1>Change Password</h1>
+    <div class="col-md-4">
+      <div class="panel panel-default  top">
+        <div class="panel-heading">
+          <strong>Options</strong>
+        </div>
+        <div class="panel-body">
+          <div class="well ptr" ng-class="{'c-grn-bg': panelOption === 'data'}" ng-click="panelOption = 'data'">Update Profile</div>
+          <div class="well ptr" ng-class="{'c-grn-bg': panelOption === 'pwd'}" ng-click="panelOption = 'pwd'">Change Password</div>
+        </div>
     </div>
-    <div class="col-sm-12">
-      <form class="form" name="form" ng-submit="changePassword(form)" novalidate>
+  </div>
+    <div class="col-md-8">
 
-        <div class="form-group">
-          <label>Current Password</label>
+      <!-- PROFILE DATA PANEL -->
+      <div class="panel panel-default  top" ng-show="panelOption === 'data'">
+        <div class="panel-body">
+          <h1>Update Profile</h1>
+          <br>
+          <form class="form" name="formData" ng-submit="update(formData)" novalidate>
 
-          <input type="password" name="password" class="form-control" ng-model="user.oldPassword"
-                 mongoose-error/>
-          <p class="help-block" ng-show="form.password.$error.mongoose">
-              {{ errors.other }}
-          </p>
+            <div class="form-group">
+              <label>City</label>
+              <input type="text" name="city" class="form-control" ng-model="user.city"
+                     required/>
+              <p class="help-block" ng-show="(formData.city.$error.required) && (form.city.$dirty || dataSubmitted)">
+                  City is required.
+              </p>
+            </div>
+
+            <div class="form-group">
+              <label>State / Province</label>
+
+              <input type="text" name="state" class="form-control" ng-model="user.state"
+                     required/>
+              <p class="help-block"
+                 ng-show="(formData.state.$error.required) && (form.state.$dirty || dataSubmitted)">
+                State is required.
+              </p>
+            </div>
+
+            <div class="form-group">
+              <label>Country</label>
+
+              <input type="text" name="country" class="form-control" ng-model="user.country"
+                     required/>
+              <p class="help-block"
+                 ng-show="(formData.country.$error.required) && (form.country.$dirty || dataSubmitted)">
+                Country is required.
+              </p>
+            </div>
+
+            <p class="help-block"> {{ message }} </p>
+
+            <div class="btn-group pull-right">
+              <button class="btn btn-lg btn-default" title="cancel"><i class="fa fa-times"></i></button>
+              <button class="btn btn-lg btn-default" title="submit" type="submit"><i class="fa fa-paper-plane"></i></button>
+            </div>
+
+          </form>
+        </div><!-- END PANEL BODY-->
+      </div><!-- END PROFILE DATA panel panel-default  -->
+
+      <div class="panel panel-default top" ng-show="panelOption === 'pwd'">
+        <div class="panel-body" >
+          <h1>Change Password</h1>
+          <br>
+          <form class="form" name="form" ng-submit="changePassword(form)" novalidate>
+
+            <div class="form-group">
+              <label>Current Password</label>
+
+              <input type="password" name="password" class="form-control" ng-model="user.oldPassword"
+                     mongoose-error/>
+              <p class="help-block" ng-show="form.password.$error.mongoose">
+                  {{ errors.other }}
+              </p>
+            </div>
+
+            <div class="form-group">
+              <label>New Password</label>
+
+              <input type="password" name="newPassword" class="form-control" ng-model="user.newPassword"
+                     ng-minlength="3"
+                     required/>
+              <p class="help-block"
+                 ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || submitted)">
+                Password must be at least 3 characters.
+              </p>
+            </div>
+
+            <p class="help-block"> {{ message }} </p>
+
+            <div class="btn-group pull-right">
+              <button class="btn btn-lg btn-default" title="cancel"><i class="fa fa-times"></i></button>
+              <button class="btn btn-lg btn-default" title="submit" type="submit"><i class="fa fa-paper-plane"></i></button>
+            </div>
+
+          </form>
         </div>
+      </div>
 
-        <div class="form-group">
-          <label>New Password</label>
-
-          <input type="password" name="newPassword" class="form-control" ng-model="user.newPassword"
-                 ng-minlength="3"
-                 required/>
-          <p class="help-block"
-             ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || submitted)">
-            Password must be at least 3 characters.
-          </p>
-        </div>
-
-        <p class="help-block"> {{ message }} </p>
-
-        <button class="btn btn-lg btn-primary" type="submit">Save changes</button>
-      </form>
     </div>
   </div>
 </div>

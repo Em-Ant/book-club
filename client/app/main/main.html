@@ -1,26 +1,36 @@
 
   <div ng-include="'components/navbar/navbar.html'"></div>
-  <div class="container text-white">
+  <div class="container text-white" ng-hide="loggedIn()">
     <header class="hero-unit" id="banner">
-      <h1>The Book Traders Club</h1>
-      <p class="lead">Exchange Knowledge with Everyone. Everywhere.</p>
+      <h1 class="font-show">The Book Traders Club</h1>
+      <p class="lead font-desc">Exchange Knowledge with Everyone. Everywhere.</p>
       <img class="img-responsive" src="assets/images/book.png" alt="The Book Traders Club">
     </header>
     <div class="row">
       <ul class="list-inline text-center actions">
-        <li class="custom-btn"ng-click="redirect('signup')">
-          Sign Up
+        <li class="custom-btn c-btn-red"ng-click="redirect('signup')">
+          <p>Sign Up</p>
         </li>
-        <li class="custom-btn trns" ng-click="redirect('login')">
-          Login
+        <li class="custom-btn c-btn-grn" ng-click="redirect('login')">
+          <p>Login</p>
         </li>
       </ul>
+    </div>
+  </div>
+  <div class="container" ng-show="loggedIn()">
+    <div class="panel panel-default top">
+      <div class="panel-body">
+        <h1 class="text-center font-show">USER HOME PAGE</h1>
+        <br>
+        <h3 class="font-desc text-center">To Be Constructed. Please Be Patient ... </h3>
+      </div>
+
     </div>
   </div>
   <footer>
     <div class="container text-white">
       <p>
-        <a href="#">TBTC</a> by <a href="http://emant.altervista.org">emant</a> | <a href="https://twitter.com/js999x">@js999x</a> | &copy;2015
+        <a href="http://tbtc.herokuapp.com/">TBTC</a> by <a href="http://emant.altervista.org">emant</a> | <a href="https://twitter.com/js999x">@js999x</a> | &copy;2015
       </p>
     </div>
   </footer>

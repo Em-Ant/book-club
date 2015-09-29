@@ -23,7 +23,14 @@ body {
     font-size: 70px;
     line-height: 1;
     letter-spacing: -1px;
-    font-family: 'Fredericka the Great', cursive;
+}
+
+.font-show {
+  font-family: 'Fredericka the Great', cursive;
+}
+
+.font-desc {
+  font-family: 'Special Elite', cursive;
 }
 
 .hero-unit {
@@ -41,14 +48,12 @@ body {
 
 .lead {
   margin-top: 30px;
-  font-family: 'Special Elite', cursive;
-
 }
 
 footer {
     text-align: center;
     padding: 30px 0;
-    margin-top: 120px;
+    margin-top: 80px;
     font-family: 'Special Elite', cursive;
     font-size: 15px;
 }
@@ -79,22 +84,73 @@ li.custom-btn {
   border-radius: 100%;
   text-align: center;
   font-size: 20px;
-  padding-top: 30px;
+  align-content: center;
   cursor: pointer;
   transition: all 0.2s;
 }
 
+li.custom-btn  p {
+    text-align: center;
+    position: relative;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
 
 .actions {
   margin-top: 40px;
 }
 
+
 .custom-btn:hover {
   border-radius: 10%;
+}
+
+.c-btn-grn:hover {
+  border-color: #39d1b4;
+  color: #39d1b4;
+}
+
+.c-btn-red:hover {
   border-color: #f4696a;
   color: #f4696a;
 }
 
+.c-grn-bg {
+  background-color: #39d1b4;
+  color: #f5f5f5;
+}
+
+.c-red-bg {
+  background-color: #f4696a;
+  color: #f5f5f5;
+}
+
+.cust-btn.c-red-bg:hover {
+  background-color: #df393a;
+  color: #f5f5f5;
+}
+
+.cust-btn.c-grn-bg:hover {
+  background-color: #239680;
+  color: #f5f5f5;
+}
+
 .custom-btn:active {
   box-shadow: 0 0 10px #f8c1c1;
+}
+
+.panel-default {
+  background-color: #F8F8F8;
+  color: #555;
+}
+
+.panel-default .panel-heading, .panel-default .panel-footer {
+  background-color: #e8e8e8;
+  color: #555;
+}
+
+.top {
+  margin-top: 50px;
 }

@@ -1,5 +1,19 @@
-.thing-form {
-    margin: 20px 0;
+@import url('https://fonts.googleapis.com/css?family=Fredericka+the+Great|Special+Elite|Lato');
+
+
+
+body {
+  background: url('/assets/images/concrete_wall.png');
+  font-family: 'Lato', sans-serif;
+}
+
+.text-white {
+  color: #f5f5f5;
+}
+
+.navbar-brand {
+  font-family: 'Fredericka the Great', cursive;
+  font-size: 1.7em;
 }
 
 #banner {
@@ -8,27 +22,79 @@
 }
 
 #banner h1 {
-    font-size: 60px;
+    font-size: 70px;
     line-height: 1;
     letter-spacing: -1px;
+    font-family: 'Fredericka the Great', cursive;
 }
 
 .hero-unit {
     position: relative;
-    padding: 30px 15px;
+    padding: 30px 10px;
     color: #F5F5F5;
     text-align: center;
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-    background: #4393B9;
 }
 
-.footer {
+.hero-unit img {
+  margin:auto;
+  margin-top: 40px;
+}
+
+.lead {
+  margin-top: 30px;
+  font-family: 'Special Elite', cursive;
+
+}
+
+footer {
     text-align: center;
     padding: 30px 0;
-    margin-top: 70px;
-    border-top: 1px solid #E5E5E5;
+    margin-top: 120px;
+    font-family: 'Special Elite', cursive;
+    font-size: 15px;
+}
+
+footer a {
+  color: #6F8A91;
+  transition: all 0.2s;
+}
+
+footer a:hover {
+  color: #f4696a;
+  text-decoration: none;
 }
 
 .navbar-text {
     margin-left: 15px;
+}
+
+
+li.custom-btn {
+  position: relative;
+  margin: 10px;
+  width: 100px;
+  height: 100px;
+  border: 3px solid #f5f5f5;
+  border-radius: 100%;
+  text-align: center;
+  font-size: 20px;
+  padding-top: 30px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+
+.actions {
+  margin-top: 40px;
+}
+
+.custom-btn:hover {
+  border-radius: 10%;
+  border-color: #f4696a;
+  color: #f4696a;
+}
+
+.custom-btn:active {
+  box-shadow: 0 0 10px #f8c1c1;
 }

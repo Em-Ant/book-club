@@ -1,5 +1,6 @@
-# FullStack MEAN App Backbone #
+# The Book Traders Club #
 
 for [freeCodeCamp](http://www.freecodecamp.com)
 
-First *BASEJUMP* TEST 
+
+**BASEJUMP #4** in progress...

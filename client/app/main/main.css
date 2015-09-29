@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Fredericka+the+Great|Special+Elite|Lato');
-
 
 
 body {
@@ -57,11 +55,13 @@ footer {
 
 footer a {
   color: #6F8A91;
+  position: relative;
   transition: all 0.2s;
 }
 
 footer a:hover {
   color: #f4696a;
+  top: -2px;
   text-decoration: none;
 }
 

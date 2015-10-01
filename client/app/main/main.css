@@ -132,7 +132,7 @@ li.custom-btn  p {
 }
 
 .c-green {
-  color: #39d1b4;  
+  color: #39d1b4;
 }
 
 .cust-btn.c-red-bg:hover {
@@ -159,6 +159,22 @@ li.custom-btn  p {
   color: #555;
 }
 
-.top {
+.top, .top-50 {
   margin-top: 50px;
+}
+
+.top-20 {
+  margin-top: 20px;
+}
+.inline {
+  display: inline-block;
+}
+
+.book-info {
+  padding-top: 10px;
+  padding-left: 20px;
+}
+
+img.align-top {
+  vertical-align: top;
 }

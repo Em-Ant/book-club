@@ -8,12 +8,56 @@
           <strong>Options</strong>
         </div>
         <div class="panel-body">
+          <div class="well ptr" ng-class="{'c-grn-bg': panelOption === 'books'}" ng-click="panelOption = 'books'">Your Books</div>
           <div class="well ptr" ng-class="{'c-grn-bg': panelOption === 'data'}" ng-click="panelOption = 'data'">Update Profile</div>
           <div class="well ptr" ng-class="{'c-grn-bg': panelOption === 'pwd'}" ng-click="panelOption = 'pwd'">Change Password</div>
         </div>
     </div>
   </div>
+
     <div class="col-md-8">
+      <!-- PROFILE BOOKS PANEL -->
+      <div class="panel panel-default  top" ng-show="panelOption === 'books'">
+        <div class="panel-body">
+          <h1>Your Books</h1>
+          <br>
+          <ul class="list-group">
+            <li class="list-group-item"><img src="/assets/images/thumb.png" alt="" />
+              <div class="">
+                <strong>Title</strong>
+                <ul>
+                  <li><strong>ISBN</strong></li>
+                </ul>
+              </div>
+            </li>
+            <li class="list-group-item">Dapibus ac facilisis in</li>
+            <li class="list-group-item">Morbi leo risus</li>
+            <li class="list-group-item">Porta ac consectetur ac</li>
+            <li class="list-group-item">Vestibulum at eros</li>
+          </ul>
+
+          <form class="form" name="formBook" ng-submit="update(formBook)" novalidate>
+            <div class="form-group">
+              <label>ISBN</label>
+
+              <input type="text" name="country" class="form-control" ng-model="user.country"
+                     required/>
+              <p class="help-block"
+                 ng-show="(formData.country.$error.required) && (form.country.$dirty || dataSubmitted)">
+                Country is required.
+              </p>
+            </div>
+
+            <p class="help-block"> {{ message }} </p>
+
+            <div class="btn-group pull-right">
+              <button class="btn btn-lg btn-default" title="cancel"><i class="fa fa-times"></i></button>
+              <button class="btn btn-lg btn-default" title="submit" type="submit"><i class="fa fa-paper-plane"></i></button>
+            </div>
+
+          </form>
+        </div><!-- END PANEL BODY-->
+      </div><!-- END PROFILE DATA panel panel-default  -->
 
       <!-- PROFILE DATA PANEL -->
       <div class="panel panel-default  top" ng-show="panelOption === 'data'">

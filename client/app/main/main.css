@@ -127,6 +127,14 @@ li.custom-btn  p {
   color: #f5f5f5;
 }
 
+.c-red {
+  color: #f4696a;
+}
+
+.c-green {
+  color: #39d1b4;  
+}
+
 .cust-btn.c-red-bg:hover {
   background-color: #df393a;
   color: #f5f5f5;

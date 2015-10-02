@@ -5,7 +5,10 @@ var mongoose = require('mongoose'),
 
 var BookSchema = new Schema({
   thumb: String,
-  title: String,
+  title: {
+    type:String,
+    required: true
+  },
   authors: [String],
   publisher: String,
   year: String,
@@ -17,11 +20,13 @@ var BookSchema = new Schema({
     type: String,
     default: 'active'
   },
-  transaction: Schema.Types.ObjectId,
+  activeRequest: Schema.Types.ObjectId,
   addedOn: {
     type: Date,
     default: Date.now
   }
+}, {
+    versionKey: false
 });
 
 module.exports = mongoose.model('Book', BookSchema);

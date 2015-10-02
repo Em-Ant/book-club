@@ -122,6 +122,11 @@ li.custom-btn  p {
   color: #f5f5f5;
 }
 
+.c-blu-bg {
+  background-color: #19B5FE;
+  color: #f5f5f5;
+}
+
 .c-red-bg {
   background-color: #f4696a;
   color: #f5f5f5;
@@ -133,6 +138,10 @@ li.custom-btn  p {
 
 .c-green {
   color: #39d1b4;
+}
+
+.c-wht-bg {
+  background-color: #f5f5f5;
 }
 
 .cust-btn.c-red-bg:hover {
@@ -147,6 +156,10 @@ li.custom-btn  p {
 
 .custom-btn:active {
   box-shadow: 0 0 10px #f8c1c1;
+}
+
+.strong {
+  font-weight: bold;
 }
 
 .panel-default {
@@ -177,5 +190,5 @@ li.custom-btn  p {
 
 img.align-top {
   vertical-align: top;
-  margin-top: 10px; 
+  margin-top: 10px;
 }

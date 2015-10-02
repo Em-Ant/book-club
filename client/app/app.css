@@ -41,3 +41,7 @@
 .help-block {
   color: #A94442;
 }
+
+a:active, a:focus {
+   outline: 0;
+}

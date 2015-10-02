@@ -1,14 +1,15 @@
   <div ng-include="'components/navbar/navbar.html'"></div>
+
   <div class="container">
     <div class="row">
+
+      <!-- OPTIONS SIDE PANEL -->
       <div class="col-md-4">
         <div class="panel panel-default  top-50">
           <div class="panel-heading">
             <strong>Options</strong>
           </div>
           <div class="panel-body">
-            <div class="well ptr" ng-class="{'c-blu-bg': panelOption === 'books'}" ng-click="panelOption = 'books'">
-              <span ng-class="{'strong': panelOption === 'books' }">My Books</span></div>
             <div class="well ptr" ng-class="{'c-grn-bg': panelOption === 'i_req'}"
               ng-click="panelOption = 'i_req'">
               <span ng-class="{'strong': panelOption === 'i_req' }">Incoming Requests</span>
@@ -21,21 +22,24 @@
               <span class="badge pull-right"
                 ng-class="{'c-red': panelOption === 'o_req', 'c-wht-bg': panelOption === 'o_req'}">{{outgoingRequests}}</span>
             </div>
+            <div class="well ptr" ng-class="{'c-blu-bg': panelOption === 'books'}" ng-click="panelOption = 'books'">
+              <span ng-class="{'strong': panelOption === 'books' }">My Bookshelf</span></div>
           </div>
         </div>
-      </div>
+      </div><!-- END OPTIONS SIDE PANEL -->
+
+      <!-- MY BOOKS PANEL -->
       <div class="col-md-8">
-        <!-- PROFILE BOOKS PANEL -->
         <div class="panel panel-default  top-50" ng-show="panelOption === 'books'">
           <div class="panel-body">
-            <h1>My Books</h1>
+            <h2>My Bookshelf</h2>
             <br>
             <ul class="list-group">
               <li class="list-group-item" ng-show="yourBooks-length === 0">No Books added</li>
               <li class="list-group-item nav" ng-repeat="book in yourBooks">
                 <div ng-hide="$parent.bookInfo === $index">
                     {{book.title}}
-                    <a href="#" class="pull-right" ng-click="$parent.bookInfo = $index"><span class="glyphicon glyphicon-info-sign"></a></span>
+                    <a href="#" class="pull-right" ng-click="$parent.bookInfo = $index" alt="info" title="book info"><span class="glyphicon glyphicon-info-sign"></a></span>
                     <br>
                     <span class="text-muted">
                       <span ng-repeat="auth in book.authors">{{auth}}<span ng-show="$index != book.authors.length -1">,</span> </span>
@@ -58,37 +62,99 @@
                   </div>
                 </div>
                 <div class="btn-group pull-right" ng-show="$parent.bookInfo === $index">
-                  <div class="btn btn-sm btn-default" title="cancel" ng-click="$parent.bookInfo = undefined"><span class="glyphicon glyphicon-remove"></div>
-                  <div class="btn btn-sm btn-default" title="delete" ng-click="$parent.deleteBook(book._id)"><span class="glyphicon glyphicon-trash"></div>
+                  <div class="btn btn-sm btn-default" title="close info" ng-click="$parent.bookInfo = undefined"><span class="glyphicon glyphicon-remove"></div>
+                  <div class="btn btn-sm btn-default" title="delete book" ng-click="$parent.deleteBook(book._id)"><span class="glyphicon glyphicon-trash"></div>
                 </div>
               </li>
 
             </ul>
+          </div><!-- END PANEL BODY-->
+        </div><!-- END MY BOOKS PANEL -->
 
-            <hr>
+        <!-- ADD A BOOK PANEL -->
+        <div class="panel panel-default" ng-show="panelOption === 'books'">
+          <div class="panel-body">
+            <h2>Add a Book</h2>
+            <br>
+            <!-- METHOD SELECTOR, ISBN or MANUAL INPUT -->
+            <ul class="nav nav-tabs">
+              <li role="presentation" ng-class="{active: bookAdd === 'isbn'}"><a href="#" ng-click="bookAdd = 'isbn'">by ISBN</a></li>
+              <li role="presentation" ng-class="{active: bookAdd === 'cust'}"><a href="#" ng-click="bookAdd = 'cust'">Custom Input</a></li>
+            </ul>
 
-            <!-- TODO:  VALIDATE,  -->
-            <form class="form" name="formBook" ng-submit="bookSearch(isbn)" novalidate>
-              <div class="form-group">
-                <label>Add a New Book by ISBN</label>
-
-                <input type="text" name="isbn" class="form-control" ng-model="isbn"
-                      placeholder="ISBN-10 or ISBN-13, only digits allowed ..." required/>
-                <p class="help-block"
-                   ng-show="(formData.country.$error.required) && (form.country.$dirty || dataSubmitted)">
-                  Country is required.
-                </p>
-              </div>
-
-              <p class="help-block"> {{ message }} </p>
-
-            </form>
-
-            <div ng-show="newBook" class="panel">
-              <div class="panel-heading">
-                <strong>Book Info</strong>
-              </div>
+            <!-- ADD BOOK PANEL -->
+            <div class="panel border">
               <div class="panel-body">
+
+                <!-- ISBN --><!-- TODO:  VALIDATE,  -->
+                <form class="form top-20" name="formBook" ng-submit="bookSearch(isbn)" novalidate ng-show="bookAdd === 'isbn'">
+                  <div class="form-group">
+                    <label><i class="fa fa-circle-o-notch fa-spin c-red" ng-show="preloadBook"></i> Search by ISBN</label>
+
+                    <input type="text" name="isbn" class="form-control" ng-model="isbn"
+                          placeholder="ISBN-10 or ISBN-13" required/>
+                    <p class="help-block"
+                       ng-show="(formData.country.$error.required) && (form.country.$dirty || dataSubmitted)">
+                      ISBN is required.
+                    </p>
+                  </div>
+                  <p class="help-block"> {{ message }} </p>
+                </form>
+                <div ng-show="newBook.noResults" class="c-red">
+                  No book found in the database.
+                  <span class="pull-right glyphicon glyphicon-remove-sign" ng-click="newBook=undefined"></span>
+                </div>
+
+                <!-- CUSTOM --><!-- TODO:  VALIDATE,  -->
+                <form class="form-horizontal top-20" ng-show="bookAdd === 'cust'">
+                  <div class="form-group">
+                    <label for="inputTitle" class="col-sm-2 control-label">Title</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputTitle" placeholder="Title (required)">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputAuthors" class="col-sm-2 control-label">Author(s)</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputAuthors" placeholder="Author(s), comma separated.">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputPublisher" class="col-sm-2 control-label">Publisher</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputPublisher" placeholder="Publisher">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputYear" class="col-sm-2 control-label">Year</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputYear" placeholder="Year">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputPages" class="col-sm-2 control-label">Pages</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputPages" placeholder="Pages">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <div class="btn-group pull-right">
+                        <div class="btn btn-sm btn-default" title="clear input" ><span class="glyphicon glyphicon-remove"></div>
+                        <div class="btn btn-sm btn-default" title="save book"><span class="glyphicon glyphicon-save"></div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- NEW BOOK INFO from EXTERNAL API -->
+            <div ng-show="bookAdd === 'isbn' && newBook.title" class="panel">
+              <div class="panel-body">
+                <div>
+                  <strong>Book Info</strong>
+                </div>
                 <img ng-src="{{newBook.thumb || '/assets/images/thumb.png'}}" alt="book thumbnail" class="inline align-top"/>
                 <div class="inline book-info">
                   <ul class="list-unstyled">
@@ -101,17 +167,16 @@
                     <li ng-show="newBook.isbn_13"><strong>ISBN-13: </strong>{{newBook.isbn_13}}</li>
                   </ul>
                 </div>
-              </div>
-              <div class="panel-footer nav">
-                <div class="btn-group pull-right">
-                  <div class="btn btn-sm btn-default" title="cancel" ng-click="newBook = undefined"><span class="glyphicon glyphicon-remove"></div>
-                  <div class="btn btn-sm btn-default" title="save book" ng-click="saveNewBook()"><span class="glyphicon glyphicon-send"></div>
+                <div class="nav">
+                  <div class="btn-group pull-right">
+                    <div class="btn btn-sm btn-default" title="cancel" ng-click="newBook = undefined"><span class="glyphicon glyphicon-remove"></div>
+                    <div class="btn btn-sm btn-default" title="save book" ng-click="saveNewBook()"><span class="glyphicon glyphicon-save"></div>
+                  </div>
                 </div>
               </div>
-
             </div>
 
           </div><!-- END PANEL BODY-->
-        </div><!-- END PROFILE DATA panel panel-default  -->
+        </div><!-- END ADD A BOOK -->
       </div>
   </div>

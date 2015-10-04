@@ -48,7 +48,7 @@ angular.module('fullstackApp')
         $scope.newBook = temp;
         $scope.saveNewBook();
         temp = undefined;
-        clearForm(form);
+        $scope.clearForm(form);
       }
     };
 
@@ -110,7 +110,7 @@ angular.module('fullstackApp')
                 }
               });
             }
-            clearForm(form);
+            $scope.clearForm(form);
             $scope.newBook = newBook;
             $scope.isbn = undefined;
             $scope.preloadBook = undefined;

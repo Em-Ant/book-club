@@ -1,182 +1,230 @@
-  <div ng-include="'components/navbar/navbar.html'"></div>
 
-  <div class="container">
-    <div class="row">
+<!--
+! THIS VIEW IS VERY COMPLEX
+! UI-Router could have been a better choice
+-->
 
-      <!-- OPTIONS SIDE PANEL -->
-      <div class="col-md-4">
-        <div class="panel panel-default  top-50">
-          <div class="panel-heading">
-            <strong>Options</strong>
-          </div>
-          <div class="panel-body">
-            <div class="well ptr" ng-class="{'c-grn-bg': panelOption === 'i_req'}"
-              ng-click="panelOption = 'i_req'">
-              <span ng-class="{'strong': panelOption === 'i_req' }">Incoming Requests</span>
-              <span class="badge pull-right"
-                ng-class="{'c-green': panelOption === 'i_req', 'c-wht-bg': panelOption === 'i_req'}">{{incomingRequests}}</span>
-            </div>
-            <div class="well ptr" ng-class="{'c-red-bg': panelOption === 'o_req'}"
-              ng-click="panelOption = 'o_req'">
-              <span ng-class="{'strong': panelOption === 'o_req' }">Outgoing Requests</span>
-              <span class="badge pull-right"
-                ng-class="{'c-red': panelOption === 'o_req', 'c-wht-bg': panelOption === 'o_req'}">{{outgoingRequests}}</span>
-            </div>
-            <div class="well ptr" ng-class="{'c-blu-bg': panelOption === 'books'}" ng-click="panelOption = 'books'">
-              <span ng-class="{'strong': panelOption === 'books' }">My Bookshelf</span></div>
-          </div>
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+  <div class="row">
+
+    <!-- OPTIONS SIDE PANEL -->
+    <div class="col-md-4">
+      <div class="panel panel-default  top-50">
+        <div class="panel-heading">
+          <strong>Dashboard</strong>
         </div>
-      </div><!-- END OPTIONS SIDE PANEL -->
+        <div class="panel-body">
+          <div class="well ptr" ng-class="{'c-grn-bg': panelOption === 'i_req'}"
+            ng-click="panelOption = 'i_req'">
+            <span ng-class="{'strong': panelOption === 'i_req' }">Incoming Requests</span>
+            <span class="badge pull-right"
+              ng-class="{'c-green': panelOption === 'i_req', 'c-wht-bg': panelOption === 'i_req', 'c-grn-bg': incomingRequests && panelOption !== 'i_req'}">{{incomingRequests}}
+            </span>
+          </div>
+          <div class="well ptr" ng-class="{'c-red-bg': panelOption === 'o_req'}"
+            ng-click="panelOption = 'o_req'">
+            <span ng-class="{'strong': panelOption === 'o_req' }">Outgoing Requests</span>
+            <span class="badge pull-right"
+              ng-class="{'c-red': panelOption === 'o_req', 'c-wht-bg': panelOption === 'o_req', 'c-red-bg': outgoingRequests && panelOption !== 'o_req'}">{{outgoingRequests}}
+            </span>
+          </div>
+          <div class="well ptr" ng-class="{'c-blu-bg': panelOption === 'books'}" ng-click="panelOption = 'books'">
+            <span ng-class="{'strong': panelOption === 'books' }">My Bookshelf</span></div>
+        </div>
+      </div>
+    </div><!-- END OPTIONS SIDE PANEL -->
 
-      <!-- MY BOOKS PANEL -->
-      <div class="col-md-8">
-        <div class="panel panel-default  top-50" ng-show="panelOption === 'books'">
-          <div class="panel-body">
-            <h2>My Bookshelf</h2>
-            <br>
-            <ul class="list-group">
-              <li class="list-group-item" ng-show="yourBooks-length === 0">No Books added</li>
-              <li class="list-group-item nav" ng-repeat="book in yourBooks">
-                <div ng-hide="$parent.bookInfo === $index">
-                    {{book.title}}
-                    <a href="#" class="pull-right" ng-click="$parent.bookInfo = $index" alt="info" title="book info"><span class="glyphicon glyphicon-info-sign"></a></span>
-                    <br>
-                    <span class="text-muted">
-                      <span ng-repeat="auth in book.authors">{{auth}}<span ng-show="$index != book.authors.length -1">,</span> </span>
-                    </span>
-                </div>
-                <div ng-show="$parent.bookInfo === $index">
-                  <img ng-src="{{book.thumb || '/assets/images/thumb.png'}}" alt="book thumbnail" class="inline align-top"/>
-                  <div class="inline book-info">
-                    <ul class="list-unstyled">
-                      <li><strong>Title: </strong>{{book.title}}</li>
-                      <li><strong>Author(s): </strong><span ng-repeat="auth in book.authors">{{auth}}<span ng-show="$index != book.authors.length -1">,</span> </span></li>
-                      <li ng-show="book.publisher"><strong>Publisher: </strong>{{book.publisher}}</li>
-                      <li><strong>Year: </strong>{{book.year}}</li>
-                      <li><strong>Pages: </strong>{{book.pages}}</li>
-                      <li ng-show="book.isbn_10"><strong>ISBN-10: </strong>{{book.isbn_10}}</li>
-                      <li ng-show="book.isbn_13"><strong>ISBN-13: </strong>{{book.isbn_13}}</li>
-                    </ul>
-                    <br>
-                    <p><strong>Status: </strong><span>{{book.status}}</span></p>
-                  </div>
-                </div>
-                <div class="btn-group pull-right" ng-show="$parent.bookInfo === $index">
-                  <div class="btn btn-sm btn-default" title="close info" ng-click="$parent.bookInfo = undefined"><span class="glyphicon glyphicon-remove"></div>
-                  <div class="btn btn-sm btn-default" title="delete book" ng-click="$parent.deleteBook(book._id)"><span class="glyphicon glyphicon-trash"></div>
-                </div>
-              </li>
-
-            </ul>
-          </div><!-- END PANEL BODY-->
-        </div><!-- END MY BOOKS PANEL -->
-
-        <!-- ADD A BOOK PANEL -->
-        <div class="panel panel-default" ng-show="panelOption === 'books'">
-          <div class="panel-body">
-            <h2>Add a Book</h2>
-            <br>
-            <!-- METHOD SELECTOR, ISBN or MANUAL INPUT -->
-            <ul class="nav nav-tabs">
-              <li role="presentation" ng-class="{active: bookAdd === 'isbn'}"><a href="#" ng-click="bookAdd = 'isbn'">by ISBN</a></li>
-              <li role="presentation" ng-class="{active: bookAdd === 'cust'}"><a href="#" ng-click="bookAdd = 'cust'">Custom Input</a></li>
-            </ul>
-
-            <!-- ADD BOOK PANEL -->
-            <div class="panel border">
-              <div class="panel-body">
-
-                <!-- ISBN --><!-- TODO:  VALIDATE,  -->
-                <form class="form top-20" name="formBook" ng-submit="bookSearch(isbn)" novalidate ng-show="bookAdd === 'isbn'">
-                  <div class="form-group">
-                    <label><i class="fa fa-circle-o-notch fa-spin c-red" ng-show="preloadBook"></i> Search by ISBN</label>
-
-                    <input type="text" name="isbn" class="form-control" ng-model="isbn"
-                          placeholder="ISBN-10 or ISBN-13" required/>
-                    <p class="help-block"
-                       ng-show="(formData.country.$error.required) && (form.country.$dirty || dataSubmitted)">
-                      ISBN is required.
-                    </p>
-                  </div>
-                  <p class="help-block"> {{ message }} </p>
-                </form>
-                <div ng-show="newBook.noResults" class="c-red">
-                  No book found in the database.
-                  <span class="pull-right glyphicon glyphicon-remove-sign" ng-click="newBook=undefined"></span>
-                </div>
-
-                <!-- CUSTOM --><!-- TODO:  VALIDATE,  -->
-                <form class="form-horizontal top-20" ng-show="bookAdd === 'cust'">
-                  <div class="form-group">
-                    <label for="inputTitle" class="col-sm-2 control-label">Title</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputTitle" placeholder="Title (required)">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputAuthors" class="col-sm-2 control-label">Author(s)</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputAuthors" placeholder="Author(s), comma separated.">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputPublisher" class="col-sm-2 control-label">Publisher</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputPublisher" placeholder="Publisher">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputYear" class="col-sm-2 control-label">Year</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputYear" placeholder="Year">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputPages" class="col-sm-2 control-label">Pages</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputPages" placeholder="Pages">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                      <div class="btn-group pull-right">
-                        <div class="btn btn-sm btn-default" title="clear input" ><span class="glyphicon glyphicon-remove"></div>
-                        <div class="btn btn-sm btn-default" title="save book"><span class="glyphicon glyphicon-save"></div>
-                      </div>
-                    </div>
-                  </div>
-                </form>
+    <!-- MY BOOKS PANEL -->
+    <div class="col-md-8">
+      <div class="panel panel-default  top-50" ng-show="panelOption === 'books'">
+        <div class="panel-body">
+          <h2>My Bookshelf</h2>
+          <br>
+          <ul class="list-group">
+            <li class="list-group-item" ng-show="yourBooks-length === 0">No Books added</li>
+            <li class="list-group-item nav" ng-repeat="book in yourBooks">
+              <div ng-hide="$parent.bookInfo === $index">
+                  {{book.title}}
+                  <a href="#" class="pull-right" ng-click="$parent.bookInfo = $index" alt="info" title="book info"><span class="glyphicon glyphicon-chevron-down"></span></a>
+                  <br>
+                  <span class="text-muted">
+                    <span ng-repeat="auth in book.authors">{{auth}}<span ng-show="$index != book.authors.length -1">,</span> </span>
+                  </span>
               </div>
-            </div>
-
-            <!-- NEW BOOK INFO from EXTERNAL API -->
-            <div ng-show="bookAdd === 'isbn' && newBook.title" class="panel">
-              <div class="panel-body">
-                <div>
-                  <strong>Book Info</strong>
-                </div>
-                <img ng-src="{{newBook.thumb || '/assets/images/thumb.png'}}" alt="book thumbnail" class="inline align-top"/>
+              <div ng-show="$parent.bookInfo === $index">
+                <a href="#" class="pull-right" ng-click="$parent.bookInfo = undefined" alt="info" title="book info"><span class="glyphicon glyphicon-chevron-up"></span></a>
+                <img ng-src="{{book.thumb || '/assets/images/thumb.png'}}" alt="book thumbnail" class="inline align-top"/>
                 <div class="inline book-info">
                   <ul class="list-unstyled">
-                    <li><strong>Title: </strong>{{newBook.title}}</li>
-                    <li><strong>Author(s): </strong><span ng-repeat="auth in newBook.authors">{{auth}}<span ng-show="$index != newBook.authors.length -1">,</span> </span></li>
-                    <li><strong>Publisher: </strong>{{newBook.publisher}}</li>
-                    <li><strong>Year: </strong>{{newBook.year}}</li>
-                    <li><strong>Pages: </strong>{{newBook.pages}}</li>
-                    <li ng-show="newBook.isbn_10"><strong>ISBN-10: </strong>{{newBook.isbn_10}}</li>
-                    <li ng-show="newBook.isbn_13"><strong>ISBN-13: </strong>{{newBook.isbn_13}}</li>
+                    <li><strong>Title: </strong>{{book.title}}</li>
+                    <li><strong>Author(s): </strong><span ng-repeat="auth in book.authors">{{auth}}<span ng-show="$index != book.authors.length -1">,</span> </span></li>
+                    <li ng-show="book.categories && book.categories.length > 0"><strong>Category(ies): </strong><span
+                      ng-repeat="tag in book.categories">{{tag}}<span ng-show="$index != book.categories.length -1">,</span> </span></li>
+                    <li ng-show="book.publisher"><strong>Publisher: </strong>{{book.publisher}}</li>
+                    <li ng-show="book.year"><strong>Year: </strong>{{book.year}}</li>
+                    <li ng-show="book.pages"><strong>Pages: </strong>{{book.pages}}</li>
+                    <li ng-show="book.isbn_10"><strong>ISBN-10: </strong>{{book.isbn_10}}</li>
+                    <li ng-show="book.isbn_13"><strong>ISBN-13: </strong>{{book.isbn_13}}</li>
                   </ul>
+                  <br>
+                  <p><strong>Status: </strong><span>{{book.status}}</span></p>
                 </div>
-                <div class="nav">
-                  <div class="btn-group pull-right">
-                    <div class="btn btn-sm btn-default" title="cancel" ng-click="newBook = undefined"><span class="glyphicon glyphicon-remove"></div>
-                    <div class="btn btn-sm btn-default" title="save book" ng-click="saveNewBook()"><span class="glyphicon glyphicon-save"></div>
+              </div>
+              <div class="btn-group pull-right" ng-show="$parent.bookInfo === $index">
+                <div class="btn btn-sm btn-default" title="delete book" ng-click="$parent.deleteBook(book._id)"><span class="glyphicon glyphicon-trash"></div>
+              </div>
+            </li>
+
+          </ul>
+        </div><!-- END PANEL BODY-->
+      </div><!-- END MY BOOKS PANEL -->
+
+      <!-- ADD A BOOK PANEL -->
+      <div class="panel panel-default" ng-show="panelOption === 'books'">
+        <div class="panel-body">
+          <h2>Add a Book</h2>
+          <br>
+          <!-- METHOD SELECTOR, ISBN or MANUAL INPUT -->
+          <ul class="nav nav-tabs">
+            <li role="presentation" ng-class="{active: bookAdd === 'isbn'}"><a href="#" ng-click="bookAdd = 'isbn'">by ISBN</a></li>
+            <li role="presentation" ng-class="{active: bookAdd === 'cust'}"><a href="#" ng-click="bookAdd = 'cust'">Custom Input</a></li>
+          </ul>
+
+          <!-- ADD BOOK PANEL -->
+          <div class="panel top-10">
+            <div class="panel-body">
+
+              <!-- ISBN -->
+              <form class="form top-20" name="formISBN" ng-submit="bookSearch(formISBN)" novalidate ng-show="bookAdd === 'isbn'">
+                <div class="form-group" ng-class="{'has-error': !formISBN.isbn.$valid && formISBN.$submitted}">
+                  <label><i class="fa fa-circle-o-notch fa-spin c-red" ng-show="preloadBook"></i> Search by ISBN</label>
+
+                  <input type="text" name="isbn" class="form-control" ng-model="isbn"
+                        placeholder="ISBN-10 or ISBN-13" required ng-minlength="10" pattern="^\d+[\d-]*\d$"/>
+                  <p class="help-block"
+                     ng-show="(formISBN.isbn.$error.required) && (formISBN.$submitted)">
+                    ISBN is required.
+                  </p>
+                  <p class="help-block"
+                     ng-show="(formISBN.isbn.$error.pattern || formISBN.isbn.$error.minlength) && (formISBN.$submitted)">
+                    ISBN is badly formed.
+                  </p>
+                </div>
+                <p class="help-block"> {{ message }} </p>
+              </form>
+              <div ng-show="newBook.noResults" class="c-red">
+                No book found in the database.
+                <span class="pull-right glyphicon glyphicon-remove-sign" ng-click="newBook=undefined"></span>
+              </div><!-- END ISBN -->
+
+              <!-- CUSTOM -->
+              <form class="form-horizontal top-20" name="formCustom" novalidate
+                ng-show="bookAdd === 'cust'" ng-submit="customSubmit(formCustom)">
+                <div class="form-group" ng-class="{'has-error': !formCustom.title.$valid && formCustom.$submitted}">
+                  <label for="inputTitle" class="col-sm-2 control-label">Title</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputTitle" name="title"
+                     placeholder="Title (required)" ng-model="tempBook.title" required>
+                     <p class="help-block"
+                        ng-show="(formCustom.title.$error.required) && (formCustom.$submitted)">
+                       <strong>Title</strong> required.
+                     </p>
                   </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': !formCustom.authors.$valid && formCustom.$submitted}">
+                  <label for="inputAuthors" class="col-sm-2 control-label">Author(s)</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputAuthors" name="authors"
+                      placeholder="Author(s), comma separated." ng-model="tempBook.authors" required>
+                      <p class="help-block"
+                         ng-show="(formCustom.authors.$error.required) && (formCustom.$submitted)">
+                        <strong>Author(s)</strong> required.
+                      </p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputCategories" class="col-sm-2 control-label">Category(ies)</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputCategories"
+                      placeholder="Categories, comma separated." ng-model="tempBook.categories">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPublisher" class="col-sm-2 control-label">Publisher</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputPublisher"
+                      placeholder="Publisher" ng-model="tempBook.publisher">
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': !formCustom.year.$valid && formCustom.$submitted}">
+                  <label for="inputYear" class="col-sm-2 control-label">Year</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputYear" name="year"
+                      placeholder="Year" ng-model="tempBook.year" pattern="\d{4}">
+                      <p class="help-block"
+                         ng-show="(formCustom.year.$error.pattern) && (formCustom.$submitted)">
+                        Year format: <strong>YYYY</strong>.
+                      </p>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': !formCustom.pages.$valid && formCustom.$submitted}">
+                  <label for="inputPages" class="col-sm-2 control-label">Pages</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputPages" name="pages"
+                     placeholder="Pages" ng-model="tempBook.pages" pattern="\d+">
+                     <p class="help-block"
+                        ng-show="(formCustom.pages.$error.pattern) && (formCustom.$submitted)">
+                       <strong>Pages</strong> is an integer number.
+                     </p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <div class="btn-group pull-right">
+                      <div class="btn btn-sm btn-default" title="clear input" ng-click="tempBook = undefined; clearForm(formCustom)">
+                        <span class="glyphicon glyphicon-remove"/>
+                      </div>
+                      <button class="btn btn-sm btn-default" title="save book" type="submit">
+                        <span class="glyphicon glyphicon-save"/>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form><!-- END CUSTOM -->
+            </div>
+          </div><!-- END ADD BOOK PANEL -->
+
+          <!-- NEW BOOK INFO from EXTERNAL API -->
+          <div ng-show="bookAdd === 'isbn' && newBook.title" class="panel">
+            <div class="panel-body">
+              <div>
+                <strong>Book Info</strong>
+              </div>
+              <img ng-src="{{newBook.thumb || '/assets/images/thumb.png'}}" alt="book thumbnail" class="inline align-top"/>
+              <div class="inline book-info">
+                <ul class="list-unstyled">
+                  <li><strong>Title: </strong>{{newBook.title}}</li>
+                  <li><strong>Author(s): </strong><span ng-repeat="auth in newBook.authors">{{auth}}<span ng-show="$index != newBook.authors.length -1">,</span> </span></li>
+                  <li><strong>Category(ies): </strong><span ng-repeat="tag in newBook.categories">{{tag}}<span ng-show="$index != newBook.categories.length -1">,</span> </span></li>
+                  <li><strong>Publisher: </strong>{{newBook.publisher}}</li>
+                  <li><strong>Year: </strong>{{newBook.year}}</li>
+                  <li><strong>Pages: </strong>{{newBook.pages}}</li>
+                  <li ng-show="newBook.isbn_10"><strong>ISBN-10: </strong>{{newBook.isbn_10}}</li>
+                  <li ng-show="newBook.isbn_13"><strong>ISBN-13: </strong>{{newBook.isbn_13}}</li>
+                </ul>
+              </div>
+              <div class="nav">
+                <div class="btn-group pull-right">
+                  <div class="btn btn-sm btn-default" title="cancel" ng-click="newBook = undefined"><span class="glyphicon glyphicon-remove"></div>
+                  <div class="btn btn-sm btn-default" title="save book" ng-click="saveNewBook()"><span class="glyphicon glyphicon-save"></div>
                 </div>
               </div>
             </div>
+          </div>
 
-          </div><!-- END PANEL BODY-->
-        </div><!-- END ADD A BOOK -->
-      </div>
-  </div>
+        </div><!-- END PANEL BODY-->
+      </div><!-- END ADD A BOOK -->
+    </div>
+</div>

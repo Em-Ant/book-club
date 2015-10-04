@@ -11,6 +11,7 @@ var BookSchema = new Schema({
   },
   authors: [String],
   publisher: String,
+  categories: [String],
   year: String,
   pages: String,
   isbn_10: String,

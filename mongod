@@ -1,1 +1,1 @@
-mongod --dbpath=./data --nojournal --rest "$@"
+mongod --dbpath=./data --nojournal --rest "$@" --smallfiles

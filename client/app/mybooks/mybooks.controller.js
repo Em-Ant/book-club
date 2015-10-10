@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fullstackApp')
-  .controller('MybooksCtrl', function ($scope, $http) {
+  .controller('MybooksCtrl', function ($scope, $http, $timeout) {
 
     /**
     * TODO:
@@ -25,6 +25,10 @@ angular.module('fullstackApp')
 
         // display the added book
         $scope.yourBooks.push(res);
+        $scope.added = true;
+        $timeout(function () {
+          $scope.added = undefined;
+        }, 3000);
       });
     };
 

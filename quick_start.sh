@@ -6,6 +6,7 @@
 
 console="xfce4-terminal";
 
+
 # Works only if in a terminal
 tty -s;
 if [ $? -eq 0 ];
@@ -18,6 +19,10 @@ if [ $? -eq 0 ];
   . ~/.nvm/nvm.sh;
 
   # Load NodeJS and Start Express Server
-  nvm use 0 && grunt serve;
+  nvm use 0;  
+  NODE_PATH=`which node`;
+  NODE_PATH=${NODE_PATH/bin\/node/lib\/node_modules};
+  export NODE_PATH; #:~/.nvm/versions/node/[NODE_VERSION]/lib/node_modules
 
+  grunt serve;
 fi

@@ -45,29 +45,3 @@
 a:active, a:focus {
    outline: 0;
 }
-
-.flex {
-  text-align: center;
-}
-
-div.thumb {
-  padding: 10px;
-  display:inline-block;
-  vertical-align: middle;
-  margin: 10px;
-  position: relative;
-  border-radius: 10px;
-  background-color: #f8f8f8;
-  text-align: left;
-
-}
-
-div.thumbnail.cust .btn {
-  position: absolute;
-  right: 5px;
-  bottom: 5px;
-}
-
-.exchanged {
-  color: #F4696A;
-}

@@ -192,3 +192,23 @@ img.align-top {
   vertical-align: top;
   margin-top: 10px;
 }
+
+.flex {
+  text-align: center;
+}
+
+div.thumb {
+  padding: 10px;
+  display:inline-block;
+  vertical-align: middle;
+  margin: 10px;
+  position: relative;
+  border-radius: 10px;
+  background-color: #f8f8f8;
+  text-align: left;
+
+}
+
+div.thumb img {
+  width: 100px;
+}

@@ -31,6 +31,7 @@ angular.module('fullstackApp')
       })
     };
 
+
     Auth.isLoggedInAsync(function(status) {
       if (status) {
         $scope.loggedIn = true;

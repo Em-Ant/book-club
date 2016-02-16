@@ -184,8 +184,10 @@ li.custom-btn  p {
 }
 
 .book-info {
+  box-sizing: border-box;
   padding-top: 10px;
-  padding-left: 20px;
+  padding-left: 10px;
+  max-width: 220px;
 }
 
 img.align-top {
@@ -198,10 +200,12 @@ img.align-top {
 }
 
 div.thumb {
+  box-sizing: border-box;
   padding: 10px;
   display:inline-block;
-  vertical-align: middle;
-  margin: 10px;
+  vertical-align: top;
+  margin: 5px;
+  max-width: 350px;
   position: relative;
   border-radius: 10px;
   background-color: #f8f8f8;
@@ -210,5 +214,5 @@ div.thumb {
 }
 
 div.thumb img {
-  width: 100px;
+  width : 100px;
 }

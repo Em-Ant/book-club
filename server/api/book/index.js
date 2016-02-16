@@ -8,8 +8,6 @@ var router = express.Router();
 
 router.get('/mybooks/', auth.isAuthenticated(), controller.getMybooks);
 router.get('/active/', auth.isAuthenticated(), controller.getActive);
-router.get('/req/outgoing', auth.isAuthenticated(), controller.getOutgoing);
-router.get('/req/incoming', auth.isAuthenticated(), controller.getIncoming);
 router.get('/:id', controller.show);
 router.post('/', auth.isAuthenticated(), controller.create);
 router.put('/:id', auth.isAuthenticated(), controller.update);

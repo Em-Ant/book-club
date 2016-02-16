@@ -58,7 +58,12 @@ angular.module('fullstackApp')
 
     $scope.getMybooks = function() {
       $http.get('api/books/mybooks/').success(function(res) {
-        $scope.yourBooks = res;
+        $scope.yourBooks = res.myBooks;
+        $scope.outgoingRequests = res.outgoing.length;
+        $scope.outgoingBooks = res.outgoing;
+        $scope.incomingRequests = res.incoming.length;
+        $scope.incomingBooks = res.incoming;
+        $scope.panelOption = $scope.incomingRequests ? 'i_req' : ($scope.outgoingRequests ? 'o_req' : 'books');
       });
     };
 
@@ -128,7 +133,7 @@ angular.module('fullstackApp')
     book.requestedBy = null;
     book.reqInfo = {};
     $http.put('api/books/' + book._id, book).success(function () {
-      $scope.getOutgoing();
+      $scope.getMybooks();
     })
   };
 
@@ -138,7 +143,6 @@ angular.module('fullstackApp')
     book.requestedBy = null;
     book.reqInfo = {};
     $http.put('api/books/' + book._id, book).success(function () {
-      $scope.getIncoming();
       $scope.getMybooks();
     })
   };
@@ -147,38 +151,22 @@ angular.module('fullstackApp')
     var book = $scope.incomingBooks[index];
     book.status = 'exchanged';
     $http.put('api/books/' + book._id, book).success(function () {
-      $scope.getIncoming();
       $scope.getMybooks();
     })
   };
 
-  $scope.getOutgoing = function() {
-    $http.get('api/books/req/outgoing').success(function (res) {
-      $scope.outgoingRequests = res.length;
-      $scope.outgoingBooks = res;
-    })
-  }
-
-  $scope.getIncoming = function() {
-    $http.get('api/books/req/incoming').success(function (res) {
-      $scope.incomingRequests = res.length;
-      $scope.incomingBooks = res;
-    })
-  }
 
   $scope.showInfo = function(book) {
     return (book.owner === Auth.getCurrentUser()._id);
   }
   /** INITIALIZATION *************/
 
-  $scope.panelOption = 'books';
+  $scope.panelOption = $scope.incomingRequests ? 'i_req' : ($scope.outgoingRequests ? 'o_req' : 'books');
   $scope.bookAdd = 'isbn';
   $scope.incomingRequests = 0;
   $scope.outgoingRequests = 0;
 
   // Load Books
   $scope.getMybooks();
-  $scope.getOutgoing();
-  $scope.getIncoming()
 
 });

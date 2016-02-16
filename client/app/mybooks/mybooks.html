@@ -165,7 +165,7 @@
                     <li ng-show="book.isbn_13"><strong>ISBN-13: </strong>{{book.isbn_13}}</li>
                   </ul>
                   <br>
-                  <div ng-hide="showInfo(book) === true">
+                  <div ng-show="showInfo(book) === true">
                     <p><strong>Requested by: </strong>{{book.reqInfo.name}}<span ng-show="book.reqInfo.city"> - {{book.reqInfo.city}}</span></p>
                     <p><strong>e-mail: </strong>{{book.reqInfo.email}}</p>
                   </div>
@@ -177,7 +177,7 @@
                   class="btn btn-sm btn-default"
                   title="delete book"
                   ng-click="$parent.deleteBook(book._id)"
-                  ng-show="showInfo(book) === true"><span class="glyphicon glyphicon-trash"></div>
+                  ng-hide="showInfo(book) === true"><span class="glyphicon glyphicon-trash"></div>
               </div>
             </li>
 

@@ -13,9 +13,22 @@ exports.index = function(req, res) {
 
 // Get list of books
 exports.getMybooks = function(req, res) {
+  var resBooks = {};
+  // My bookshelf
   Book.find({$or: [{owner: req.user._id}, {$and: [{status: 'exchanged'}, {requestedBy: req.user._id}]}] }, function (err, books) {
     if(err) { return handleError(res, err); }
-    return res.status(200).json(books);
+    resBooks.myBooks = books;
+    // Outgoing Reqs
+    Book.find({status: 'waiting', requestedBy: req.user._id}, function(err, books) {
+      if(err) { return handleError(res, err); }
+      resBooks.outgoing = books;
+      // Incoming Reqs
+      Book.find({status: 'waiting', owner: req.user._id}, function(err, books) {
+        if(err) { return handleError(res, err); }
+        resBooks.incoming= books;
+        return res.status(200).json(resBooks);
+      });
+    });
   });
 };
 
@@ -24,20 +37,6 @@ exports.getActive = function(req, res) {
     if(err) { return handleError(res, err); }
     return res.status(200).json(books);
   })
-};
-
-exports.getOutgoing = function(req, res) {
-  Book.find({status: 'waiting', requestedBy: req.user._id}, function(err, books) {
-    if(err) { return handleError(res, err); }
-    return res.status(200).json(books);
-  });
-};
-
-exports.getIncoming = function(req, res) {
-  Book.find({status: 'waiting', owner: req.user._id}, function(err, books) {
-    if(err) { return handleError(res, err); }
-    return res.status(200).json(books);
-  });
 };
 
 // Get a single book

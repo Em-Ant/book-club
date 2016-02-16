@@ -19,7 +19,13 @@ if [ $? -eq 0 ];
   . ~/.nvm/nvm.sh;
 
   # Load NodeJS and Start Express Server
-  nvm use 0;  
+  if [ -z $1 ];
+    then
+    NVER="0"; #"stable";
+  else
+    NVER=$1;
+  fi
+  nvm use $NVER;
   NODE_PATH=`which node`;
   NODE_PATH=${NODE_PATH/bin\/node/lib\/node_modules};
   export NODE_PATH; #:~/.nvm/versions/node/[NODE_VERSION]/lib/node_modules

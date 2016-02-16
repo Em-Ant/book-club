@@ -12,6 +12,11 @@ var UserSchema = new Schema({
     type: String,
     default: 'user'
   },
+  loc : {
+    city: String,
+    state: String,
+    country: String
+  },
   hashedPassword: String,
   provider: String,
   salt: String,

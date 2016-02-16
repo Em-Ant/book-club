@@ -41,15 +41,15 @@
       </div>
     </div><!-- END OPTIONS SIDE PANEL -->
 
-    <!-- MY BOOKS PANEL -->
+    <!-- O_REQ PANEL -->
     <div class="col-md-8">
-      <div class="panel panel-default top-50" ng-show="panelOption === 'books'">
+      <div class="panel panel-default top-50" ng-show="panelOption === 'o_req'">
         <div class="panel-body">
-          <h2>My Bookshelf</h2>
+          <h2>Outgoing Requests</h2>
           <br>
           <ul class="list-group">
-            <li class="list-group-item" ng-show="yourBooks-length === 0">No Books added</li>
-            <li class="list-group-item nav" ng-repeat="book in yourBooks">
+            <li class="list-group-item" ng-show="outgoingBooks-length === 0">No Requests Made</li>
+            <li class="list-group-item nav" ng-repeat="book in outgoingBooks">
               <div ng-hide="$parent.bookInfo === $index">
                   {{book.title}}
                   <a href="#" class="pull-right" ng-click="$parent.bookInfo = $index" alt="info" title="book info"><span class="glyphicon glyphicon-chevron-down"></span></a>
@@ -78,7 +78,106 @@
                 </div>
               </div>
               <div class="btn-group pull-right" ng-show="$parent.bookInfo === $index">
-                <div class="btn btn-sm btn-default" title="delete book" ng-click="$parent.deleteBook(book._id)"><span class="glyphicon glyphicon-trash"></div>
+                <div class="btn btn-sm btn-default" title="retire request" ng-click="$parent.retireRequest($index)"><span class="glyphicon glyphicon-remove"></div>
+              </div>
+            </li>
+
+          </ul>
+        </div><!-- END PANEL BODY-->
+      </div><!-- END O_REQ PANEL -->
+
+      <!-- I_REQ PANEL -->
+        <div class="panel panel-default top-50" ng-show="panelOption === 'i_req'">
+          <div class="panel-body">
+            <h2>Incoming Requests</h2>
+            <br>
+            <ul class="list-group">
+              <li class="list-group-item" ng-show="incomingBooks-length === 0">No Requests Received</li>
+              <li class="list-group-item nav" ng-repeat="book in incomingBooks">
+                <div ng-hide="$parent.bookInfo === $index">
+                    {{book.title}}
+                    <a href="#" class="pull-right" ng-click="$parent.bookInfo = $index" alt="info" title="book info"><span class="glyphicon glyphicon-chevron-down"></span></a>
+                    <br>
+                    <span class="text-muted">
+                      <span ng-repeat="auth in book.authors">{{auth}}<span ng-show="$index != book.authors.length -1">,</span> </span>
+                    </span>
+                </div>
+                <div ng-show="$parent.bookInfo === $index">
+                  <a href="#" class="pull-right" ng-click="$parent.bookInfo = undefined" alt="info" title="book info"><span class="glyphicon glyphicon-chevron-up"></span></a>
+                  <img ng-src="{{book.thumb || '/assets/images/thumb.png'}}" alt="book thumbnail" class="inline align-top"/>
+                  <div class="inline book-info">
+                    <ul class="list-unstyled">
+                      <li><strong>Title: </strong>{{book.title}}</li>
+                      <li><strong>Author(s): </strong><span ng-repeat="auth in book.authors">{{auth}}<span ng-show="$index != book.authors.length -1">,</span> </span></li>
+                      <li ng-show="book.categories && book.categories.length > 0"><strong>Category(ies): </strong><span
+                        ng-repeat="tag in book.categories">{{tag}}<span ng-show="$index != book.categories.length -1">,</span> </span></li>
+                      <li ng-show="book.publisher"><strong>Publisher: </strong>{{book.publisher}}</li>
+                      <li ng-show="book.year"><strong>Year: </strong>{{book.year}}</li>
+                      <li ng-show="book.pages"><strong>Pages: </strong>{{book.pages}}</li>
+                      <li ng-show="book.isbn_10"><strong>ISBN-10: </strong>{{book.isbn_10}}</li>
+                      <li ng-show="book.isbn_13"><strong>ISBN-13: </strong>{{book.isbn_13}}</li>
+                    </ul>
+                    <br>
+                    <p><strong>Requested by: </strong>{{book.reqInfo.name}}<span ng-show="book.reqInfo.city"> - {{book.reqInfo.city}}</span></p>
+                    <p><strong>e-mail: </strong>{{book.reqInfo.email}}</p>
+                    <p><strong>Status: </strong><span>{{book.status}}</span></p>
+                  </div>
+                </div>
+                <div class="btn-group pull-right" ng-show="$parent.bookInfo === $index">
+                  <div class="btn btn-sm btn-default" title="delete book" ng-click="$parent.approveRequest($index)"><span class="glyphicon glyphicon-ok"></div>
+                  <div class="btn btn-sm btn-default" title="delete book" ng-click="$parent.rejectRequest($index)"><span class="glyphicon glyphicon-remove"></div>
+                </div>
+              </li>
+
+            </ul>
+          </div><!-- END PANEL BODY-->
+        </div><!-- END I_REQ PANEL -->
+
+    <!-- MY BOOKS PANEL -->
+      <div class="panel panel-default top-50" ng-show="panelOption === 'books'">
+        <div class="panel-body">
+          <h2>My Bookshelf</h2>
+          <br>
+          <ul class="list-group">
+            <li class="list-group-item" ng-show="yourBooks-length === 0">No Books added</li>
+            <li class="list-group-item nav" ng-repeat="book in yourBooks" >
+              <div ng-hide="$parent.bookInfo === $index" ng-class="{'exchanged' : book.status === 'exchanged'}">
+                  {{book.title}}
+                  <a href="#" class="pull-right" ng-click="$parent.bookInfo = $index" alt="info" title="book info"><span class="glyphicon glyphicon-chevron-down"></span></a>
+                  <br>
+                  <span class="text-muted">
+                    <span ng-repeat="auth in book.authors">{{auth}}<span ng-show="$index != book.authors.length -1">,</span> </span>
+                  </span>
+              </div>
+              <div ng-show="$parent.bookInfo === $index">
+                <a href="#" class="pull-right" ng-click="$parent.bookInfo = undefined" alt="info" title="book info"><span class="glyphicon glyphicon-chevron-up"></span></a>
+                <img ng-src="{{book.thumb || '/assets/images/thumb.png'}}" alt="book thumbnail" class="inline align-top"/>
+                <div class="inline book-info">
+                  <ul class="list-unstyled">
+                    <li><strong>Title: </strong>{{book.title}}</li>
+                    <li><strong>Author(s): </strong><span ng-repeat="auth in book.authors">{{auth}}<span ng-show="$index != book.authors.length -1">,</span> </span></li>
+                    <li ng-show="book.categories && book.categories.length > 0"><strong>Category(ies): </strong><span
+                      ng-repeat="tag in book.categories">{{tag}}<span ng-show="$index != book.categories.length -1">,</span> </span></li>
+                    <li ng-show="book.publisher"><strong>Publisher: </strong>{{book.publisher}}</li>
+                    <li ng-show="book.year"><strong>Year: </strong>{{book.year}}</li>
+                    <li ng-show="book.pages"><strong>Pages: </strong>{{book.pages}}</li>
+                    <li ng-show="book.isbn_10"><strong>ISBN-10: </strong>{{book.isbn_10}}</li>
+                    <li ng-show="book.isbn_13"><strong>ISBN-13: </strong>{{book.isbn_13}}</li>
+                  </ul>
+                  <br>
+                  <div ng-hide="showInfo(book) === true">
+                    <p><strong>Requested by: </strong>{{book.reqInfo.name}}<span ng-show="book.reqInfo.city"> - {{book.reqInfo.city}}</span></p>
+                    <p><strong>e-mail: </strong>{{book.reqInfo.email}}</p>
+                  </div>
+                  <p><strong>Status: </strong><span>{{book.status}}</span></p>
+                </div>
+              </div>
+              <div class="btn-group pull-right" ng-show="$parent.bookInfo === $index">
+                <div
+                  class="btn btn-sm btn-default"
+                  title="delete book"
+                  ng-click="$parent.deleteBook(book._id)"
+                  ng-show="showInfo(book) === true"><span class="glyphicon glyphicon-trash"></div>
               </div>
             </li>
 

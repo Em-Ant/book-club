@@ -1,5 +1,7 @@
 'use strict';
 
+var _ = require('lodash');
+
 var User = require('./user.model');
 var passport = require('passport');
 var config = require('../../config/environment');
@@ -17,6 +19,21 @@ exports.index = function(req, res) {
   User.find({}, '-salt -hashedPassword', function (err, users) {
     if(err) return res.status(500).send(err);
     res.status(200).json(users);
+  });
+};
+
+exports.updateLoc = function(req, res) {
+  if(req.body._id) { delete req.body._id; }
+  User.findById(req.params.id, function (err, user) {
+    if (err) { return handleError(res, err); }
+    if(!user) { return res.status(404).send('Not Found'); }
+    var newObj = {};
+    newObj.loc = req.body;
+    var updated = _.merge(user, newObj);
+    updated.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.status(200).send('OK');
+    });
   });
 };
 

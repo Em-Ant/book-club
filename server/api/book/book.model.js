@@ -21,7 +21,12 @@ var BookSchema = new Schema({
     type: String,
     default: 'active'
   },
-  activeRequest: Schema.Types.ObjectId,
+  requestedBy: Schema.Types.ObjectId,
+  reqInfo: {
+    name: String,
+    email: String,
+    city: String
+  } ,
   addedOn: {
     type: Date,
     default: Date.now

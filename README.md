@@ -12,8 +12,7 @@ Heroku app: http://tbtc.herokuapp.com/
 ###Usage :
 
 Log in with email and ad some books, or make some request.
-
-You can log-in useing the test account test@test.com, password: test
+You can log-in using the test account test@test.com, password: test
 
 ###Tools:
 

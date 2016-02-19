@@ -3,6 +3,9 @@
   margin-top: 10px;
 }
 
+.requested {
+  color: #39D1B4;
+}
 .exchanged {
   color: #F4696A;
 }

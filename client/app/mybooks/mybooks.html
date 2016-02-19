@@ -78,7 +78,7 @@
                 </div>
               </div>
               <div class="btn-group pull-right" ng-show="$parent.bookInfo === $index">
-                <div class="btn btn-sm btn-default" title="retire request" ng-click="$parent.retireRequest($index)"><span class="glyphicon glyphicon-remove"></div>
+                <div class="btn btn-sm btn-default" title="Discard request" ng-click="$parent.retireRequest($index)"><span class="glyphicon glyphicon-remove"></div>
               </div>
             </li>
 
@@ -124,8 +124,8 @@
                   </div>
                 </div>
                 <div class="btn-group pull-right" ng-show="$parent.bookInfo === $index">
-                  <div class="btn btn-sm btn-default" title="delete book" ng-click="$parent.approveRequest($index)"><span class="glyphicon glyphicon-ok"></div>
-                  <div class="btn btn-sm btn-default" title="delete book" ng-click="$parent.rejectRequest($index)"><span class="glyphicon glyphicon-remove"></div>
+                  <div class="btn btn-sm btn-default" title="Accept request" ng-click="$parent.approveRequest($index)"><span class="glyphicon glyphicon-ok"></div>
+                  <div class="btn btn-sm btn-default" title="Reject request" ng-click="$parent.rejectRequest($index)"><span class="glyphicon glyphicon-remove"></div>
                 </div>
               </li>
 
@@ -141,7 +141,7 @@
           <ul class="list-group">
             <li class="list-group-item" ng-show="yourBooks-length === 0">No Books added</li>
             <li class="list-group-item nav" ng-repeat="book in yourBooks" >
-              <div ng-hide="$parent.bookInfo === $index" ng-class="{'exchanged' : book.status === 'exchanged'}">
+              <div ng-hide="$parent.bookInfo === $index" ng-class="{'exchanged' : book.status === 'exchanged', 'requested': book.status === 'waiting'}">
                   {{book.title}}
                   <a href="#" class="pull-right" ng-click="$parent.bookInfo = $index" alt="info" title="book info"><span class="glyphicon glyphicon-chevron-down"></span></a>
                   <br>

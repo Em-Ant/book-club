@@ -157,7 +157,7 @@ angular.module('fullstackApp')
 
 
   $scope.showInfo = function(book) {
-    return (book.owner === Auth.getCurrentUser()._id);
+    return (book.status !== 'active' && book.owner === Auth.getCurrentUser()._id);
   }
   /** INITIALIZATION *************/
 
